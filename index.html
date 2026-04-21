@@ -1,0 +1,839 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+:root{--bl:#2F6FED;--bll:#EFF6FF;--blb:#BFDBFE;--gn:#16A34A;--gnl:#F0FDF4;--gnb:#BBF7D0;--or:#D97706;--orl:#FFFBEB;--orb:#FDE68A;--rd:#DC2626;--rdl:#FEF2F2;--rdb:#FECACA;--yl:#CA8A04;--yll:#FEF9C3;--ylb:#FDE047;--pu:#7C3AED;--pul:#F5F3FF;--pub:#DDD6FE;--br:#E2E8F0;--tx:#0F172A;--mt:#64748B;--sf:#F8FAFC}
+.app{background:#F1F5F9;font-size:13px;color:var(--tx);min-height:720px}
+/* LOGIN */
+.ls{display:flex;min-height:720px}
+.ll{flex:1;background:#0F172A;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center}
+.ll-ico{width:54px;height:54px;background:var(--bl);border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:700;margin:0 auto 16px}
+.ll-h{font-size:24px;font-weight:700;color:#fff;margin-bottom:8px}
+.ll-s{font-size:12px;color:#94A3B8;max-width:280px;line-height:1.7;margin:0 auto 28px}
+.ll-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:260px;margin:0 auto}
+.ll-stat{background:rgba(255,255,255,.06);border:0.5px solid rgba(255,255,255,.1);border-radius:10px;padding:12px}
+.ll-sv{font-size:18px;font-weight:700;color:#fff}
+.ll-sl{font-size:10px;color:#64748B;margin-top:2px}
+.lr{width:460px;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:44px;border-left:0.5px solid var(--br);overflow-y:auto}
+.lr-h{font-size:21px;font-weight:700;color:var(--tx);margin-bottom:5px}
+.lr-s{font-size:12px;color:var(--mt);margin-bottom:18px;line-height:1.5}
+.role-sel{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.role-opt{padding:9px 12px;border:0.5px solid var(--br);border-radius:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:10px}
+.role-opt:hover,.role-opt.on{border-color:var(--bl);background:var(--bll)}
+.rdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.rname{font-size:12px;font-weight:700;color:var(--tx)}
+.rdesc{font-size:10px;color:var(--mt);margin-top:1px}
+.cred-box{background:var(--sf);border:0.5px solid var(--br);border-radius:8px;padding:9px 12px;margin-bottom:16px}
+.cred-hd{font-size:10px;font-weight:700;color:var(--mt);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.cred-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:0.5px solid var(--br)}
+.cred-row:last-child{border:none}
+.cred-r{font-size:10px;font-weight:700;color:var(--tx)}
+.cred-c{font-size:10px;color:var(--mt);font-family:monospace}
+.fgrp{margin-bottom:12px}
+.flbl{font-size:11px;color:var(--mt);margin-bottom:3px;display:block;font-weight:600}
+.finp{display:flex;align-items:center;gap:8px;border:0.5px solid var(--br);border-radius:8px;padding:9px 12px;background:var(--sf);transition:border-color .15s}
+.finp:focus-within{border-color:var(--bl);background:#fff}
+.finp input{border:none;background:transparent;font-size:13px;color:var(--tx);flex:1;outline:none}
+.finp-ic{font-size:12px;color:var(--mt);flex-shrink:0;width:14px}
+.btn-login{width:100%;padding:11px;background:var(--bl);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-top:4px}
+/* DASH */
+.dl{display:flex;min-height:720px}
+.sb{width:212px;min-width:212px;background:#fff;border-right:0.5px solid var(--br);display:flex;flex-direction:column}
+.sb-top{padding:13px;border-bottom:0.5px solid var(--br);display:flex;align-items:center;gap:8px}
+.sb-logo{width:28px;height:28px;background:var(--bl);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;flex-shrink:0}
+.sb-bn{font-size:12px;font-weight:700;color:var(--tx)}
+.sb-bs{font-size:9px;color:var(--mt)}
+.sb-nav{flex:1;padding:5px 0;overflow-y:auto}
+.sb-sec{padding:7px 13px 2px;font-size:9px;font-weight:700;color:var(--mt);text-transform:uppercase;letter-spacing:.06em}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 13px;cursor:pointer;color:var(--mt);border-left:2px solid transparent;font-size:12px;transition:all .1s}
+.ni:hover{background:#EFF6FF;color:var(--tx)}
+.ni.on{color:var(--bl);background:#EFF6FF;border-left-color:var(--bl);font-weight:700}
+.ni-ic{width:14px;text-align:center;font-size:12px;flex-shrink:0}
+.sb-foot{padding:9px 12px;border-top:0.5px solid var(--br);display:flex;align-items:center;gap:8px}
+.sb-av{width:26px;height:26px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+.sb-fn{font-size:11px;font-weight:700;color:var(--tx)}
+.sb-fe{font-size:10px;color:var(--mt)}
+.ma{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.topbar{background:#fff;border-bottom:0.5px solid var(--br);padding:0 16px;height:50px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.tb-bc{font-size:11px;color:var(--mt)}
+.tb-pg{font-size:13px;font-weight:700;color:var(--tx);margin-left:4px}
+.tb-r{margin-left:auto;display:flex;align-items:center;gap:10px}
+.online{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--gn);font-weight:600}
+.odot{width:6px;height:6px;border-radius:50%;background:var(--gn)}
+.ct{flex:1;overflow-y:auto;padding:14px 16px;position:relative}
+.card{background:#fff;border:0.5px solid var(--br);border-radius:10px;padding:13px;margin-bottom:10px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;flex-wrap:wrap;gap:7px}
+.ct2{font-size:13px;font-weight:700;color:var(--tx)}
+.mrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;margin-bottom:12px}
+.mc{background:#fff;border:0.5px solid var(--br);border-radius:10px;padding:12px;transition:all .15s}
+.mc:hover{border-color:var(--bl);background:var(--bll)}
+.mc-l{font-size:10px;color:var(--mt);margin-bottom:3px}
+.mc-v{font-size:20px;font-weight:700;color:var(--bl)}
+.mc-s{font-size:10px;color:var(--gn);margin-top:2px}
+.btn-p{padding:6px 12px;background:var(--bl);border:none;border-radius:7px;font-size:11px;cursor:pointer;color:#fff;font-weight:700;white-space:nowrap}
+.btn-p:hover{background:#1D4ED8}
+.btn-s{padding:6px 12px;background:#fff;border:0.5px solid var(--br);border-radius:7px;font-size:11px;cursor:pointer;color:var(--tx);white-space:nowrap}
+.btn-s:hover{border-color:var(--bl);color:var(--bl)}
+.btn-recv{padding:7px 13px;background:var(--gnl);border:1px solid var(--gn);border-radius:7px;font-size:11px;cursor:pointer;color:#15803D;font-weight:700}
+.btn-dispatch{padding:7px 13px;background:var(--bll);border:1px solid var(--bl);border-radius:7px;font-size:11px;cursor:pointer;color:var(--bl);font-weight:700}
+.tw{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl th{text-align:left;padding:6px 8px;color:var(--mt);font-weight:700;border-bottom:0.5px solid var(--br);background:var(--sf);white-space:nowrap;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.tbl td{padding:7px 8px;border-bottom:0.5px solid var(--br);color:var(--tx);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--sf)}
+.pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:700}
+.p-g{background:var(--gnl);color:#15803D}
+.p-o{background:var(--orl);color:#B45309}
+.p-r{background:var(--rdl);color:#B91C1C}
+.p-b{background:var(--bll);color:#1D4ED8}
+.p-y{background:var(--yll);color:var(--yl)}
+.p-pu{background:var(--pul);color:#5B21B6}
+.p-gr{background:var(--sf);color:var(--mt)}
+.dot{width:5px;height:5px;border-radius:50%;display:inline-block}
+.tbr{display:flex;gap:6px;margin-bottom:9px;flex-wrap:wrap;align-items:center}
+.sinp{padding:6px 9px;border:0.5px solid var(--br);border-radius:7px;font-size:11px;background:#fff;color:var(--tx);min-width:150px}
+.ssel{padding:5px 7px;border:0.5px solid var(--br);border-radius:7px;font-size:11px;background:#fff;color:var(--tx)}
+.pr{margin-bottom:8px}
+.ph{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
+.pb{height:5px;background:var(--br);border-radius:99px;overflow:hidden}
+.pf{height:100%;border-radius:99px}
+.pf-b{background:var(--bl)}.pf-g{background:var(--gn)}.pf-o{background:var(--or)}
+.g2{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:10px;margin-bottom:10px}
+.g22{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:11px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:11px}
+.stb{background:var(--bll);border:0.5px solid var(--blb);border-radius:8px;padding:11px;text-align:center}
+.stbv{font-size:19px;font-weight:700;color:var(--bl)}
+.stbl{font-size:10px;color:#1D4ED8;margin-top:2px}
+.pgr{display:flex;align-items:center;gap:4px;margin-top:9px;font-size:11px;color:var(--mt)}
+.pgb{padding:3px 7px;border:0.5px solid var(--br);border-radius:5px;background:#fff;font-size:11px;cursor:pointer}
+.pgb.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+.fg{margin-bottom:10px}
+.fl{font-size:11px;color:var(--mt);margin-bottom:3px;display:block;font-weight:600}
+.fi{width:100%;padding:7px 9px;border:0.5px solid var(--br);border-radius:7px;font-size:12px;background:#fff;color:var(--tx)}
+.fi:focus{border-color:var(--bl);outline:none}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sec-div{font-size:10px;font-weight:700;color:var(--mt);text-transform:uppercase;letter-spacing:.06em;padding:7px 0 3px;border-bottom:0.5px solid var(--br);margin-bottom:9px}
+.mov{position:absolute;top:0;left:0;width:100%;min-height:100%;background:rgba(15,23,42,.45);z-index:200;display:flex;align-items:flex-start;justify-content:center;padding:28px 14px}
+.modal{background:#fff;border-radius:12px;border:0.5px solid var(--br);width:100%;max-width:500px;padding:20px}
+.mhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.mtt{font-size:14px;font-weight:700;color:var(--tx)}
+.mxx{cursor:pointer;font-size:17px;color:var(--mt)}
+.mft{display:flex;justify-content:flex-end;gap:8px;margin-top:13px;padding-top:11px;border-top:0.5px solid var(--br)}
+.xp{border:0.5px solid var(--br);border-radius:8px;overflow:hidden;margin-top:9px}
+.xh{background:#217346;color:#fff;padding:7px 9px;font-size:11px;font-weight:700;display:grid;gap:5px}
+.xr{padding:6px 9px;font-size:11px;display:grid;gap:5px;border-top:0.5px solid var(--br)}
+.xr:nth-child(odd){background:var(--sf)}
+.uz{border:1.5px dashed var(--br);border-radius:8px;padding:22px;text-align:center;cursor:pointer;background:var(--sf)}
+.uz:hover{border-color:var(--bl);background:var(--bll)}
+.vo-banner{background:var(--yll);border:0.5px solid var(--ylb);border-radius:8px;padding:8px 12px;font-size:11px;color:var(--yl);font-weight:700;margin-bottom:11px}
+.lc-row{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:0;margin-bottom:0}
+.lc-step{padding:10px;border-radius:8px}
+.lc-arrow{display:flex;align-items:center;justify-content:center;padding:0 8px;color:var(--mt);font-size:18px}
+.lc-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-bottom:5px}
+.lc-title{font-size:11px;font-weight:700;margin-bottom:2px}
+.lc-sub{font-size:10px;color:var(--mt);line-height:1.4}
+.bar-chart{display:flex;align-items:flex-end;gap:7px;height:90px;padding:0 2px}
+.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:4px}
+.bl{font-size:9px;color:var(--mt);white-space:nowrap}
+.bv{font-size:10px;font-weight:700;color:var(--tx)}
+.ts-row{padding:8px 10px;border-radius:7px;border:0.5px solid;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer}
+.mid-badge{display:inline-flex;align-items:center;gap:4px;background:var(--pul);border:0.5px solid var(--pub);padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;color:#5B21B6;font-family:monospace}
+.tid-badge{display:inline-flex;align-items:center;gap:4px;background:#FEF9C3;border:0.5px solid #FDE047;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;color:#A16207;font-family:monospace}
+</style>
+
+
+<div class="app" id="root"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+let S={scr:'login',role:'walnut',loginRole:'walnut',page:'dash',modal:null,openWH:null,openShip:null,openUser:null,openFSO:null};
+
+const ROLES={
+  walnut:{email:'admin@walnut.in',pass:'walnut123',label:'Super Admin',sub:'Walnut Office',short:'SA',name:'Walnut Office',col:'#2F6FED',bcls:'p-b',edit:true},
+  zsm:{email:'zsm@sbi.co.in',pass:'zsm123',label:'Admin — ZSM',sub:'Zonal Sales Manager',short:'ZSM',name:'Rajesh Verma',col:'#D97706',bcls:'p-o',edit:true},
+  fso:{email:'fso@sbi.co.in',pass:'fso123',label:'FSO',sub:'Field Sales Officer',short:'FSO',name:'Priya Sharma',col:'#7C3AED',bcls:'p-pu',edit:true},
+  sbi:{email:'sbi@sbi.co.in',pass:'sbi123',label:'SBI Office',sub:'View Only',short:'SBI',name:'SBI Office',col:'#16A34A',bcls:'p-g',edit:false}
+};
+
+const NAV={
+  walnut:[{i:'▦',p:'dash',l:'Dashboard',s:'Main'},{i:'▣',p:'wh',l:'Warehouses',s:'Main'},{i:'🚚',p:'transit',l:'Transit',s:'Main'},{i:'⬆',p:'send',l:'Send stock',s:'Main'},{i:'◉',p:'zsm',l:'ZSM management',s:'Admin'},{i:'◻',p:'fso',l:'FSO management',s:'Admin'},{i:'▤',p:'hist',l:'History',s:'Admin'},{i:'◎',p:'rep',l:'Reports',s:'Admin'}],
+  zsm:[{i:'▦',p:'dash',l:'Dashboard',s:'Main'},{i:'▣',p:'wh',l:'My warehouse',s:'Main'},{i:'🚚',p:'transit',l:'Incoming shipments',s:'Main'},{i:'◉',p:'fso',l:'My FSOs',s:'Main'},{i:'⇄',p:'alloc',l:'Device allocation',s:'Main'},{i:'▤',p:'hist',l:'History',s:'Main'}],
+  fso:[{i:'▦',p:'dash',l:'Dashboard',s:'Main'},{i:'◻',p:'dev',l:'My devices',s:'Main'},{i:'▣',p:'deploy',l:'Deploy device',s:'Main'},{i:'▤',p:'hist',l:'My history',s:'Main'}],
+  sbi:[{i:'▦',p:'dash',l:'Dashboard',s:'View'},{i:'▣',p:'wh',l:'Warehouses',s:'View'},{i:'🚚',p:'transit',l:'Transit',s:'View'},{i:'▤',p:'hist',l:'History',s:'View'},{i:'◎',p:'rep',l:'Reports',s:'View'}]
+};
+
+const WAREHOUSES=[
+  {id:'W1',name:'WH Mumbai Central',loc:'Andheri, Mumbai',zsm:'Rajesh Verma',total:1200,received:1200,pending:0,deployed:850},
+  {id:'W2',name:'WH Delhi North',loc:'Rohini, Delhi',zsm:'Arjun Kumar',total:900,received:750,pending:150,deployed:620},
+  {id:'W3',name:'WH Bengaluru',loc:'Electronic City',zsm:'Sunita Rao',total:600,received:600,pending:0,deployed:410},
+];
+let SHIPMENTS=[
+  {id:'SHP-001',boxes:10,perBox:50,from:'Walnut Office',to:'WH Mumbai Central',whId:'W1',dispatch:'01 Apr 2026',expected:'05 Apr 2026',actual:'05 Apr 2026',status:'Delivered',remarks:'All received'},
+  {id:'SHP-002',boxes:8,perBox:50,from:'Walnut Office',to:'WH Delhi North',whId:'W2',dispatch:'05 Apr 2026',expected:'10 Apr 2026',actual:'',status:'In Transit',remarks:'On the way'},
+  {id:'SHP-003',boxes:5,perBox:50,from:'Walnut Office',to:'WH Chennai',whId:'W3',dispatch:'10 Apr 2026',expected:'16 Apr 2026',actual:'',status:'Pending',remarks:'Preparing'},
+];
+const ZSMS=[
+  {id:'Z1',name:'Rajesh Verma',loc:'Mumbai',wh:'WH Mumbai Central',phone:'+91 98201 11222',email:'rajesh@sbi.co.in',fsos:3},
+  {id:'Z2',name:'Arjun Kumar',loc:'Delhi',wh:'WH Delhi North',phone:'+91 98401 33444',email:'arjun@sbi.co.in',fsos:2},
+];
+const FSOS=[
+  {id:'F1',zsmId:'Z1',name:'Priya Sharma',loc:'Andheri',phone:'+91 97201 10001',email:'priya@sbi.co.in',assigned:30,dep:28,pend:2},
+  {id:'F2',zsmId:'Z1',name:'Ravi Kumar',loc:'Dadar',phone:'+91 97201 10002',email:'ravi@sbi.co.in',assigned:25,dep:20,pend:5},
+  {id:'F3',zsmId:'Z2',name:'Anil Singh',loc:'Connaught Pl',phone:'+91 97201 10003',email:'anil@sbi.co.in',assigned:15,dep:12,pend:3},
+];
+
+// Merchant deployment records
+const MERCHANTS=[
+  {id:'DEP-001',fsoId:'F1',fso:'Priya Sharma',zsm:'Rajesh Verma',imei:'863411001234567',sno:'SB-9201',mname:'Sharma General Store',mphone:'9820011222',memail:'sharma@gmail.com',maddr:'Shop 12, Andheri West',mid:'MID-4421',tid:'TID-8821',verif:'Aadhaar OTP',date:'14 Apr 2026',status:'Deployed'},
+  {id:'DEP-002',fsoId:'F1',fso:'Priya Sharma',zsm:'Rajesh Verma',imei:'863411001234568',sno:'SB-9202',mname:'Patel Electronics',mphone:'9820022333',memail:'patel@gmail.com',maddr:'Shop 5, Dadar',mid:'MID-4422',tid:'TID-8822',verif:'PAN',date:'14 Apr 2026',status:'Deployed'},
+  {id:'DEP-003',fsoId:'F2',fso:'Ravi Kumar',zsm:'Rajesh Verma',imei:'863411001234580',sno:'SB-9210',mname:'Gupta Traders',mphone:'9820033444',memail:'gupta@gmail.com',maddr:'Plot 8, Bandra',mid:'MID-4423',tid:'TID-8823',verif:'GSTIN',date:'13 Apr 2026',status:'Deployed'},
+  {id:'DEP-004',fsoId:'F3',fso:'Anil Singh',zsm:'Arjun Kumar',imei:'863411001234600',sno:'SB-9230',mname:'Reddy Supermart',mphone:'9830011222',memail:'reddy@gmail.com',maddr:'MG Road, Delhi',mid:'MID-4424',tid:'TID-8824',verif:'Aadhaar OTP',date:'12 Apr 2026',status:'Deployed'},
+];
+
+function pill(s){
+  const m={Delivered:'p-g',Active:'p-g','In Transit':'p-y',Pending:'p-r',Issue:'p-r',Allocated:'p-o',Available:'p-b',Deployed:'p-g',FSO:'p-pu',ZSM:'p-o'};
+  const dc={Delivered:'#16A34A',Active:'#16A34A','In Transit':'#CA8A04',Pending:'#DC2626',Allocated:'#D97706',Available:'#2F6FED',Deployed:'#16A34A'};
+  return `<span class="pill ${m[s]||'p-gr'}"><span class="dot" style="background:${dc[s]||'#64748B'}"></span>${s}</span>`;
+}
+function prog(l,v,mx,c){const p=mx>0?Math.round(v/mx*100):0;return `<div class="pr"><div class="ph"><span style="color:var(--mt)">${l}</span><span style="font-weight:700">${v}/${mx}</span></div><div class="pb"><div class="pf ${c}" style="width:${p}%"></div></div></div>`;}
+function pgr(){return `<div class="pgr"><span style="margin-right:3px">1–10 of 24</span><button class="pgb">‹</button><button class="pgb on">1</button><button class="pgb">2</button><button class="pgb">›</button></div>`;}
+function tbr(...a){return `<div class="tbr"><input class="sinp" placeholder="Search…">${a.map(x=>`<select class="ssel">${x}</select>`).join('')}<div style="margin-left:auto"><button class="btn-s" style="font-size:11px">↓ Export</button></div></div>`;}
+function bbar(l,pct,col,val){return `<div class="bw"><div class="bv">${val}</div><div class="bar" style="height:${pct}%;background:${col}"></div><div class="bl">${l}</div></div>`;}
+function vo(){return S.role==='sbi'?`<div class="vo-banner">👁 SBI Office — view only. No add, edit, or delete access.</div>`:''; }
+function canEdit(){return ROLES[S.role].edit;}
+function dispatchShip(id){const s=SHIPMENTS.find(x=>x.id===id);if(s&&s.status==='Pending'){s.status='In Transit';render();}}
+function receiveShip(id){const s=SHIPMENTS.find(x=>x.id===id);if(s&&s.status==='In Transit'){s.status='Delivered';s.actual='18 Apr 2026';const w=WAREHOUSES.find(x=>x.id===s.whId);if(w){w.received+=s.boxes*s.perBox;}render();}}
+
+// ── MERCHANT DEPLOY HISTORY TABLE (shared) ──
+function merchantTable(list, showAll){
+  return `<div class="tw"><table class="tbl">
+    <thead><tr><th>Dep ID</th><th>IMEI</th><th>Serial</th>${showAll?'<th>FSO</th><th>ZSM</th>':''}<th>Merchant name</th><th>Phone</th><th>Email</th><th>Address</th><th>MID</th><th>TID</th><th>Verification</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody>${list.map(d=>`<tr>
+      <td style="font-family:monospace;font-size:10px;font-weight:700">${d.id}</td>
+      <td style="font-family:monospace;font-size:10px">${d.imei.slice(0,14)}…</td>
+      <td>${d.sno}</td>
+      ${showAll?`<td style="color:var(--pu);font-weight:700">${d.fso}</td><td style="color:var(--or);font-weight:700">${d.zsm}</td>`:''}
+      <td style="font-weight:700">${d.mname}</td>
+      <td>${d.mphone}</td>
+      <td style="color:var(--bl)">${d.memail}</td>
+      <td style="color:var(--mt)">${d.maddr}</td>
+      <td><span class="mid-badge">MID ${d.mid}</span></td>
+      <td><span class="tid-badge">TID ${d.tid}</span></td>
+      <td><span style="font-size:10px;color:var(--gn);font-weight:700">✓ ${d.verif}</span></td>
+      <td>${d.date}</td>
+      <td>${pill('Deployed')}</td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+// ── LOGIN ──
+function rLogin(){
+  const opts=[
+    ];
+  return `<div class="ls">
+    <div class="ll">
+      <div class="ll-ico">SBI</div>
+      <div class="ll-h">SBI Soundbox IMS</div>
+      <div class="ll-s">Inventory, Warehouse & Transportation Management</div>
+      <div class="ll-grid">
+        ${[['12,480','Devices'],['3','Warehouses'],['4','ZSM zones'],['7,210','Deployed']].map(([v,l])=>`
+        <div class="ll-stat"><div class="ll-sv">${v}</div><div class="ll-sl">${l}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="lr">
+      <div class="lr-h">Sign in</div>
+      <div class="lr-s">Select role and enter credentials.</div>
+      <div class="role-sel">
+        ${opts.map(o=>`<div class="role-opt${S.loginRole===o.r?' on':''}" onclick="S.loginRole='${o.r}';render()">
+          <div class="rdot" style="background:${o.col}"></div>
+          <div><div class="rname">${o.n}</div><div class="rdesc">${o.d}</div></div>
+        </div>`).join('')}
+      </div>
+      <div class="cred-box">
+        <div class="cred-hd">Demo credentials</div>
+        ${[['Super Admin','admin@walnut.in','walnut123'],['ZSM','zsm@sbi.co.in','zsm123'],['SBI Office','sbi@sbi.co.in','sbi123']].map(([r,e,p])=>`
+        <div class="cred-row"><span class="cred-r">${r}</span><span class="cred-c">${e} / ${p}</span></div>`).join('')}
+      </div>
+      <div class="fgrp"><div class="flbl">Email</div>
+        <div class="finp"><span class="finp-ic">@</span><input type="email" id="lem" placeholder="email@sbi.co.in"></div></div>
+      <div class="fgrp"><div class="flbl">Password</div>
+        <div class="finp"><span class="finp-ic">#</span><input type="password" id="lpw" placeholder="••••••••"></div></div>
+      <div id="lerr" style="font-size:11px;color:var(--rd);display:none;margin-bottom:5px">Incorrect credentials.</div>
+      <button class="btn-login" onclick="doLogin()">Sign in →</button>
+    </div>
+  </div>`;
+}
+function doLogin(){
+  const e=($('lem')||{}).value||'',p=($('lpw')||{}).value||'';
+  let f=null;
+  Object.entries(ROLES).forEach(([r,c])=>{if(c.email===e&&c.pass===p)f=r;});
+  if(f){S.role=f;S.scr='app';S.page='dash';S.modal=null;render();}
+  else{const el=$('lerr');if(el)el.style.display='block';}
+}
+
+// ── SIDEBAR ──
+function rSB(){
+  const c=ROLES[S.role];
+  let secs={};
+  NAV[S.role].forEach(n=>{if(!secs[n.s])secs[n.s]=[];secs[n.s].push(n);});
+  return `<div class="sb">
+    <div class="sb-top">
+      <div class="sb-logo">SBI</div>
+      <div><div class="sb-bn">Soundbox IMS</div><div class="sb-bs">${c.label}</div></div>
+    </div>
+    <nav class="sb-nav">
+      ${Object.entries(secs).map(([sec,items])=>`<div class="sb-sec">${sec}</div>
+      ${items.map(n=>`<div class="ni${n.p===S.page?' on':''}" onclick="gp('${n.p}')"><span class="ni-ic">${n.i}</span>${n.l}</div>`).join('')}`).join('')}
+    </nav>
+    <div class="sb-foot">
+      <div class="sb-av">${c.short}</div>
+      <div style="flex:1;min-width:0"><div class="sb-fn">${c.name}</div><div class="sb-fe">${c.email}</div></div>
+      <span style="cursor:pointer;font-size:13px;color:var(--mt)" onclick="S.scr='login';render()">⇠</span>
+    </div>
+  </div>`;
+}
+
+// ── TOPBAR ──
+function rTB(){
+  const lbl={dash:'Dashboard',wh:'Warehouses',transit:'Transit',send:'Send stock',zsm:'ZSM management',fso:'FSO management',hist:'History',rep:'Reports',dev:'My devices',deploy:'Deploy device',alloc:'Device allocation','wh-detail':'Warehouse detail','ship-detail':'Shipment detail','fso-detail':'FSO detail'};
+  const c=ROLES[S.role];
+  return `<div class="topbar">
+    <div class="tb-bc">SBI IMS ›</div>
+    <div class="tb-pg">${lbl[S.page]||S.page}</div>
+    <div class="tb-r"><div class="online"><span class="odot"></span>Online</div>
+    <span class="pill ${c.bcls}">${c.label}</span></div>
+  </div>`;
+}
+
+// ── PAGE ROUTER ──
+function rPage(){
+  const {role:r,page:p}=S;
+  if(p==='wh-detail') return rWHDetail();
+  if(p==='ship-detail') return rShipDetail();
+  if(p==='fso-detail') return rFSODetail();
+  if(r==='walnut'){
+    if(p==='dash') return rWalnutDash();
+    if(p==='wh') return rWHList();
+    if(p==='transit') return rTransit('walnut');
+    if(p==='send') return rSendStock();
+    if(p==='zsm') return rZSMManage();
+    if(p==='fso') return rFSOManage('walnut');
+    if(p==='hist') return rMerchantHistPage('walnut');
+    if(p==='rep') return rReports();
+  }
+  if(r==='zsm'){
+    if(p==='dash') return rZSMDash();
+    if(p==='wh'){S.openWH='W1';return rWHDetail();}
+    if(p==='transit') return rTransit('zsm');
+    if(p==='fso') return rFSOManage('zsm');
+    if(p==='alloc') return rAlloc();
+    if(p==='hist') return rMerchantHistPage('zsm');
+  }
+  if(r==='fso'){
+    if(p==='dash') return rFSODash();
+    if(p==='dev') return rMyDevices();
+    if(p==='deploy') return rDeployForm();
+    if(p==='hist') return rMerchantHistPage('fso');
+  }
+  if(r==='sbi'){
+    if(p==='dash') return rSBIDash();
+    if(p==='wh') return rWHList();
+    if(p==='transit') return rTransit('sbi');
+    if(p==='hist') return rMerchantHistPage('sbi');
+    if(p==='rep') return rReports();
+  }
+  return '';
+}
+
+// ── LIFECYCLE BANNER ──
+function rLC(role){
+  return `<div class="card" style="margin-bottom:10px">
+    <div style="font-size:10px;font-weight:700;color:var(--mt);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Transit lifecycle</div>
+    <div class="lc-row">
+      <div class="lc-step" style="background:var(--rdl);border:0.5px solid var(--rdb)">
+        <div class="lc-num" style="background:var(--rd);color:#fff">1</div>
+        <div class="lc-title" style="color:#B91C1C">Pending</div>
+        <div class="lc-sub">Walnut creates shipment. Awaiting dispatch.</div>
+        ${role==='walnut'?`<div style="margin-top:5px;font-size:10px;font-weight:700;color:#B91C1C">Click "Dispatch" →</div>`:'<div style="font-size:10px;color:var(--mt);margin-top:5px">Waiting for Walnut</div>'}
+      </div>
+      <div class="lc-arrow">→</div>
+      <div class="lc-step" style="background:var(--yll);border:0.5px solid var(--ylb)">
+        <div class="lc-num" style="background:var(--yl);color:#fff">2</div>
+        <div class="lc-title" style="color:var(--yl)">In Transit</div>
+        <div class="lc-sub">Dispatched. Moving to ZSM warehouse.</div>
+        ${role==='zsm'?`<div style="margin-top:5px;font-size:10px;font-weight:700;color:var(--yl)">Click "Receive" →</div>`:'<div style="font-size:10px;color:var(--mt);margin-top:5px">ZSM confirms receipt</div>'}
+      </div>
+      <div class="lc-arrow">→</div>
+      <div class="lc-step" style="background:var(--gnl);border:0.5px solid var(--gnb)">
+        <div class="lc-num" style="background:var(--gn);color:#fff">3</div>
+        <div class="lc-title" style="color:#15803D">Delivered</div>
+        <div class="lc-sub">ZSM received. Inventory updated. Date recorded.</div>
+        <div style="margin-top:5px;font-size:10px;color:#15803D;font-weight:700">✓ All sides see delivery date</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── WALNUT PAGES ───
+function rWalnutDash(){
+  const ts=SHIPMENTS.reduce((a,s)=>a+s.boxes*s.perBox,0);
+  const it=SHIPMENTS.filter(s=>s.status==='In Transit').reduce((a,s)=>a+s.boxes*s.perBox,0);
+  const dl=SHIPMENTS.filter(s=>s.status==='Delivered').reduce((a,s)=>a+s.boxes*s.perBox,0);
+  const pd=SHIPMENTS.filter(s=>s.status==='Pending').reduce((a,s)=>a+s.boxes*s.perBox,0);
+  return `<div>
+    <div class="g4">
+      ${[['Total sent',ts],['In transit',it],['Delivered',dl],['Pending',pd]].map(([l,v])=>`<div class="mc"><div class="mc-l">${l}</div><div class="mc-v">${v}</div></div>`).join('')}
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><span class="ct2">Warehouse distribution</span></div>
+        <div class="bar-chart">${WAREHOUSES.map(w=>bbar(w.name.replace('WH ',''),Math.round(w.received/1200*88),'#2F6FED',w.received)).join('')}</div>
+        <div style="margin-top:12px">${WAREHOUSES.map(w=>prog(w.name,w.deployed,w.received,'pf-b')).join('')}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="card">
+          <div class="ch"><span class="ct2">Shipments</span><span style="font-size:11px;color:var(--bl);cursor:pointer" onclick="gp('transit')">All →</span></div>
+          ${SHIPMENTS.map(s=>`<div class="ts-row" style="background:${s.status==='In Transit'?'var(--yll)':s.status==='Delivered'?'var(--gnl)':'var(--rdl)'};border-color:${s.status==='In Transit'?'var(--ylb)':s.status==='Delivered'?'var(--gnb)':'var(--rdb)'}" onclick="S.openShip='${s.id}';S.page='ship-detail';render()">
+            <div><div style="font-size:12px;font-weight:700">${s.id}</div><div style="font-size:10px">${s.to} · ${s.boxes*s.perBox} devices</div></div>
+            <div style="display:flex;gap:5px;align-items:center">${pill(s.status)}${s.status==='Pending'?`<button class="btn-dispatch" onclick="event.stopPropagation();dispatchShip('${s.id}')">Dispatch 🚚</button>`:''}</div>
+          </div>`).join('')}
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct2">Recent merchant deployments</span><span style="font-size:11px;color:var(--bl);cursor:pointer" onclick="gp('hist')">View all →</span></div>
+          ${MERCHANTS.slice(0,3).map(d=>`<div style="padding:6px 0;border-bottom:0.5px solid var(--br)">
+            <div style="font-size:12px;font-weight:700">${d.mname}</div>
+            <div style="display:flex;gap:6px;margin-top:3px;flex-wrap:wrap">
+              <span class="mid-badge">MID ${d.mid}</span><span class="tid-badge">TID ${d.tid}</span>
+              <span style="font-size:10px;color:var(--mt)">${d.fso} · ${d.date}</span>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function rWHList(){
+  return `<div>${vo()}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px">
+      <div style="font-size:11px;color:var(--mt)">Click warehouse to open</div>
+      ${canEdit()?`<button class="btn-p" onclick="S.modal='add-wh';render()">+ Add warehouse</button>`:''}
+    </div>
+    ${WAREHOUSES.map(w=>`<div class="card" style="cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--br)'" onclick="S.openWH='${w.id}';S.page='wh-detail';render()">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;flex-wrap:wrap;gap:7px">
+        <div><div style="font-size:14px;font-weight:700">${w.name}</div>
+          <div style="font-size:11px;color:var(--mt);margin-top:2px">ZSM: <span style="color:var(--bl);font-weight:700">${w.zsm}</span> · ${w.loc}</div>
+        </div>
+        <div style="display:flex;gap:18px;text-align:center">
+          ${[['Total',w.total,'#2F6FED'],['Received',w.received,'#16A34A'],['Pending',w.pending,'#DC2626'],['Deployed',w.deployed,'#D97706']].map(([l,v,c])=>`<div><div style="font-size:17px;font-weight:700;color:${c}">${v}</div><div style="font-size:10px;color:var(--mt)">${l}</div></div>`).join('')}
+        </div>
+      </div>
+      ${prog('',w.deployed,w.total,'pf-b')}
+      <div style="font-size:11px;color:var(--bl);text-align:right;margin-top:4px">Open →</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function rWHDetail(){
+  const w=WAREHOUSES.find(x=>x.id===S.openWH)||WAREHOUSES[0];
+  const backPg='wh';
+  return `<div>${vo()}
+    <div style="font-size:12px;color:var(--bl);cursor:pointer;margin-bottom:12px" onclick="S.page='${backPg}';S.openWH=null;render()">← Back</div>
+    <div class="card" style="margin-bottom:10px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:9px;margin-bottom:11px">
+        <div><div style="font-size:15px;font-weight:700">${w.name}</div>
+          <div style="font-size:11px;color:var(--mt);margin-top:3px">ZSM: <strong style="color:var(--bl)">${w.zsm}</strong> · ${w.loc}</div>
+        </div>
+        ${canEdit()?`<button class="btn-s" onclick="S.modal='wh-upload';render()">↑ Import Excel</button>`:''}
+      </div>
+      <div class="g4">${[['Total',w.total],['Received',w.received],['Pending',w.pending],['Deployed',w.deployed]].map(([l,v])=>`<div class="stb"><div class="stbv">${v}</div><div class="stbl">${l}</div></div>`).join('')}</div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct2">Inventory</span></div>
+      ${tbr('<option>All status</option><option>Available</option><option>Deployed</option>')}
+      <div class="tw"><table class="tbl">
+        <thead><tr><th>IMEI</th><th>Serial</th><th>Shipment</th><th>Received date</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:monospace;font-size:11px">863411001234567</td><td>SB-9201</td><td>SHP-001</td><td>05 Apr 2026</td><td>${pill('Deployed')}</td></tr>
+          <tr><td style="font-family:monospace;font-size:11px">863411001234568</td><td>SB-9202</td><td>SHP-001</td><td>05 Apr 2026</td><td>${pill('Available')}</td></tr>
+          <tr><td style="font-family:monospace;font-size:11px">863411001234590</td><td>SB-9220</td><td>SHP-001</td><td>05 Apr 2026</td><td>${pill('Available')}</td></tr>
+        </tbody>
+      </table></div>${pgr()}
+    </div>
+  </div>`;
+}
+
+function rTransit(role){
+  return `<div>${vo()}
+    ${rLC(role)}
+    <div class="g4" style="margin-bottom:10px">
+      ${[['Total',SHIPMENTS.length],['In transit',SHIPMENTS.filter(s=>s.status==='In Transit').length],['Delivered',SHIPMENTS.filter(s=>s.status==='Delivered').length],['Pending',SHIPMENTS.filter(s=>s.status==='Pending').length]].map(([l,v])=>`<div class="mc"><div class="mc-l">${l}</div><div class="mc-v">${v}</div></div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct2">All shipments</span>${role==='walnut'?`<button class="btn-p" onclick="gp('send')">+ Create shipment</button>`:''}</div>
+      ${tbr('<option>All status</option><option>In Transit</option><option>Delivered</option><option>Pending</option>')}
+      <div class="tw"><table class="tbl">
+        <thead><tr><th>Shipment ID</th><th>Boxes</th><th>Devices</th><th>To warehouse</th><th>Dispatch</th><th>Expected</th><th>Delivered</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>${SHIPMENTS.map(s=>`<tr>
+          <td style="font-family:monospace;font-weight:700;color:var(--bl);cursor:pointer" onclick="S.openShip='${s.id}';S.page='ship-detail';render()">${s.id}</td>
+          <td>${s.boxes}</td><td style="font-weight:700">${s.boxes*s.perBox}</td><td>${s.to}</td>
+          <td>${s.dispatch}</td><td>${s.expected}</td><td>${s.actual||'—'}</td><td>${pill(s.status)}</td>
+          <td style="display:flex;gap:4px">
+            ${role==='walnut'&&s.status==='Pending'?`<button class="btn-dispatch" onclick="dispatchShip('${s.id}')">Dispatch 🚚</button>`:''}
+            ${role==='zsm'&&s.status==='In Transit'?`<button class="btn-recv" onclick="receiveShip('${s.id}')">Receive ✓</button>`:''}
+            <span style="color:var(--bl);font-size:11px;cursor:pointer;font-weight:700" onclick="S.openShip='${s.id}';S.page='ship-detail';render()">Open</span>
+          </td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+    </div>
+  </div>`;
+}
+
+function rShipDetail(){
+  const s=SHIPMENTS.find(x=>x.id===S.openShip)||SHIPMENTS[0];
+  const total=s.boxes*s.perBox;
+  return `<div>
+    <div style="font-size:12px;color:var(--bl);cursor:pointer;margin-bottom:12px" onclick="S.page='transit';S.openShip=null;render()">← Back</div>
+    <div class="card" style="margin-bottom:10px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:9px;margin-bottom:11px">
+        <div><div style="font-size:15px;font-weight:700">${s.id}</div>
+          <div style="font-size:11px;color:var(--mt);margin-top:3px">${s.from} → ${s.to}</div>
+        </div>
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+          ${pill(s.status)}
+          ${S.role==='walnut'&&s.status==='Pending'?`<button class="btn-dispatch" onclick="dispatchShip('${s.id}')">Dispatch shipment 🚚</button>`:''}
+          ${S.role==='zsm'&&s.status==='In Transit'?`<button class="btn-recv" onclick="receiveShip('${s.id}')">✓ Confirm receipt</button>`:''}
+        </div>
+      </div>
+      <div class="g5">${[['Boxes',s.boxes],['Per box',s.perBox],['Total',total],['Dispatch',s.dispatch],['Expected',s.expected]].map(([l,v])=>`<div class="stb"><div class="stbv" style="font-size:14px">${v}</div><div class="stbl">${l}</div></div>`).join('')}</div>
+      ${s.actual?`<div style="margin-top:9px;background:var(--gnl);border:0.5px solid var(--gnb);border-radius:7px;padding:8px 10px;font-size:11px;color:#15803D;font-weight:700">✓ Delivered: ${s.actual}</div>`:''}
+      ${s.status==='In Transit'&&S.role==='zsm'?`<div style="margin-top:9px;background:var(--yll);border:0.5px solid var(--ylb);border-radius:7px;padding:8px 10px;font-size:11px;color:var(--yl);font-weight:700;display:flex;justify-content:space-between;align-items:center"><span>🚚 Arrived — confirm receipt to update inventory</span><button class="btn-recv" onclick="receiveShip('${s.id}')">Mark delivered ✓</button></div>`:''}
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct2">Box-wise devices</span></div>
+      <div class="tw"><table class="tbl">
+        <thead><tr><th>Box ID</th><th>IMEI</th><th>Serial</th><th>Shipment ID</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody>${Array.from({length:Math.min(5,total)},(_,i)=>`<tr>
+          <td style="font-weight:700">BOX-${String(i%s.boxes+1).padStart(2,'0')}</td>
+          <td style="font-family:monospace;font-size:11px">86341100123${4500+i}</td>
+          <td>SB-${9300+i}</td><td style="font-family:monospace">${s.id}</td><td>${s.dispatch}</td>
+          <td>${pill(s.status==='Delivered'?'Delivered':'In Transit')}</td>
+        </tr>`).join('')}
+        <tr><td colspan="6" style="text-align:center;color:var(--mt);font-size:11px;padding:8px">… and ${total-5} more</td></tr>
+        </tbody>
+      </table></div>${pgr()}
+    </div>
+  </div>`;
+}
+
+function rSendStock(){
+  return `<div class="g22" style="align-items:start">
+    <div class="card">
+      <div class="ch"><span class="ct2">Create shipment</span></div>
+      <div class="fg"><label class="fl">Destination warehouse</label>
+        <select class="fi"><option>— Select —</option>${WAREHOUSES.map(w=>`<option>${w.name}</option>`).join('')}</select></div>
+      <div class="frow"><div class="fg"><label class="fl">Boxes</label><input class="fi" type="number" placeholder="e.g. 10"></div>
+        <div class="fg"><label class="fl">Devices/box</label><input class="fi" type="number" placeholder="e.g. 50"></div></div>
+      <div class="frow"><div class="fg"><label class="fl">Dispatch date</label><input class="fi" type="date"></div>
+        <div class="fg"><label class="fl">Expected delivery</label><input class="fi" type="date"></div></div>
+      <div class="fg"><label class="fl">Remarks</label><input class="fi" placeholder="Optional"></div>
+      <div class="sec-div">Upload inventory Excel</div>
+      <div class="uz" onclick="S.modal='send-upload';render()">
+        <div style="font-size:26px;color:var(--bl);margin-bottom:7px">↑</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px">Click or drag file</div>
+        <div style="font-size:11px;color:var(--mt)">IMEI | Serial | Box ID | Shipment ID | Date</div>
+      </div>
+      <button class="btn-p" style="width:100%;margin-top:11px">Create & dispatch</button>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct2">Excel format</span></div>
+      <div style="background:var(--gnl);border:0.5px solid var(--gnb);border-radius:7px;padding:7px 11px;font-size:11px;color:#15803D;font-weight:700;margin-bottom:10px">5 columns: IMEI | Serial | Box ID | Shipment ID | Date</div>
+      <div class="xp">
+        <div class="xh" style="grid-template-columns:1.5fr 1fr 0.8fr 1fr 1fr"><span>IMEI</span><span>Serial</span><span>Box ID</span><span>Ship ID</span><span>Date</span></div>
+        ${[['863411001234567','SB-9201','BOX-01','SHP-005','18 Apr'],['863411001234568','SB-9202','BOX-01','SHP-005','18 Apr']].map((r,i)=>`<div class="xr" style="grid-template-columns:1.5fr 1fr 0.8fr 1fr 1fr;background:${i%2?'var(--sf)':'#fff'}"><span style="font-family:monospace;font-size:10px">${r[0]}</span><span>${r[1]}</span><span>${r[2]}</span><span style="font-family:monospace">${r[3]}</span><span>${r[4]}</span></div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function rZSMManage(){
+  return `<div class="card">
+    <div class="ch"><span class="ct2">ZSM management</span>
+      <div style="display:flex;gap:7px"><button class="btn-s">↓ Export</button><button class="btn-p" onclick="S.modal='add-zsm';render()">+ Add ZSM</button></div>
+    </div>
+    ${tbr('<option>All locations</option>')}
+    <div class="tw"><table class="tbl">
+      <thead><tr><th>Name</th><th>Location</th><th>Warehouse</th><th>Phone</th><th>Email</th><th>FSOs</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>${ZSMS.map(z=>`<tr><td style="font-weight:700">${z.name}</td><td>${z.loc}</td><td>${z.wh}</td><td>${z.phone}</td><td>${z.email}</td><td>${z.fsos}</td><td>${pill('Active')}</td><td><span style="color:var(--rd);font-size:11px;cursor:pointer">Remove</span></td></tr>`).join('')}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function rFSOManage(role){
+  const list=role==='zsm'?FSOS.filter(f=>f.zsmId==='Z1'):FSOS;
+  return `<div class="card">
+    <div class="ch"><span class="ct2">FSO management</span>
+      <div style="display:flex;gap:7px"><button class="btn-s">↓ Export</button><button class="btn-p" onclick="S.modal='add-fso';render()">+ Add FSO</button></div>
+    </div>
+    ${tbr('<option>All locations</option>')}
+    <div class="tw"><table class="tbl">
+      <thead><tr><th>Name</th><th>ZSM</th><th>Location</th><th>Phone</th><th>Email</th><th>Assigned</th><th>Deployed</th><th>Pending</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>${list.map(f=>{const z=ZSMS.find(x=>x.id===f.zsmId);return `<tr>
+        <td style="font-weight:700">${f.name}</td><td>${z?.name}</td><td>${f.loc}</td><td>${f.phone}</td><td>${f.email}</td>
+        <td>${f.assigned}</td><td>${f.dep}</td><td>${f.pend}</td><td>${pill('Active')}</td>
+        <td><span style="color:var(--bl);font-size:11px;cursor:pointer;font-weight:700" onclick="S.openFSO='${f.id}';S.page='fso-detail';render()">Open →</span></td>
+      </tr>`}).join('')}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function rFSODetail(){
+  const f=FSOS.find(x=>x.id===S.openFSO)||FSOS[0];
+  const z=ZSMS.find(x=>x.id===f.zsmId);
+  const myDeps=MERCHANTS.filter(d=>d.fsoId===f.id);
+  const backPg=S.role==='walnut'?'fso':'fso';
+  return `<div>
+    <div style="font-size:12px;color:var(--bl);cursor:pointer;margin-bottom:12px" onclick="S.page='${backPg}';S.openFSO=null;render()">← Back to FSOs</div>
+    <div class="card" style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px">
+        <div style="display:flex;align-items:center;gap:11px">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--pul);color:var(--pu);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${f.name.split(' ').map(w=>w[0]).join('')}</div>
+          <div><div style="font-size:14px;font-weight:700">${f.name} <span class="pill p-pu" style="font-size:9px">FSO</span></div>
+            <div style="font-size:11px;color:var(--mt)">ZSM: ${z?.name} · ${f.loc} · ${f.email}</div>
+          </div>
+        </div>
+        <button class="btn-s" onclick="S.modal='fso-import';render()">↑ Import Excel</button>
+      </div>
+      <div class="g3" style="margin-top:11px">${[['Assigned',f.assigned],['Deployed',f.dep],['Pending',f.pend]].map(([l,v])=>`<div class="stb"><div class="stbv">${v}</div><div class="stbl">${l}</div></div>`).join('')}</div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct2">Merchant deployment records</span></div>
+      ${merchantTable(myDeps,false)}
+      ${pgr()}
+    </div>
+  </div>`;
+}
+
+// ── MERCHANT HISTORY PAGES (role-filtered) ──
+function rMerchantHistPage(role){
+  let list=MERCHANTS,title='',showAll=false;
+  if(role==='fso'){list=MERCHANTS.filter(d=>d.fso==='Priya Sharma');title='My merchant deployments — Priya Sharma';}
+  else if(role==='zsm'){list=MERCHANTS.filter(d=>d.zsm==='Rajesh Verma');title='Merchant deployments — my FSOs';showAll=true;}
+  else if(role==='walnut'||role==='sbi'){list=MERCHANTS;title='All merchant deployment records';showAll=true;}
+  return `<div>${vo()}
+    <div style="font-size:12px;color:var(--mt);margin-bottom:12px">${title}</div>
+    <div class="card">
+      <div class="ch"><span class="ct2">Deployment history with MID / TID</span><button class="btn-s" style="font-size:11px">↓ Export</button></div>
+      ${tbr('<option>All FSOs</option>'+FSOS.map(f=>`<option>${f.name}</option>`).join(''),
+           '<option>All status</option>','<option>All dates</option>')}
+      ${merchantTable(list,showAll)}
+      ${pgr()}
+    </div>
+  </div>`;
+}
+
+// ── ZSM PAGES ──
+function rZSMDash(){
+  const w=WAREHOUSES[0];
+  const myFSOs=FSOS.filter(f=>f.zsmId==='Z1');
+  const incoming=SHIPMENTS.filter(s=>s.whId==='W1'&&s.status==='In Transit').length;
+  return `<div>
+    ${incoming>0?`<div style="background:var(--yll);border:0.5px solid var(--ylb);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--yl);font-weight:700;margin-bottom:11px;display:flex;justify-content:space-between;align-items:center">
+      🚚 ${incoming} shipment(s) in transit — ready to receive
+      <button class="btn-recv" onclick="gp('transit')">View →</button>
+    </div>`:''}
+    <div class="g4">${[['Received',w.received],['Deployed',w.deployed],['Available',w.received-w.deployed],['My FSOs',myFSOs.length]].map(([l,v])=>`<div class="mc"><div class="mc-l">${l}</div><div class="mc-v">${v}</div></div>`).join('')}</div>
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><span class="ct2">My FSOs</span><button class="btn-p" style="font-size:11px" onclick="gp('fso')">View all</button></div>
+        <div class="tw"><table class="tbl">
+          <thead><tr><th>FSO</th><th>Location</th><th>Assigned</th><th>Deployed</th><th>Pending</th><th>Status</th></tr></thead>
+          <tbody>${myFSOs.map(f=>`<tr><td style="font-weight:700">${f.name}</td><td>${f.loc}</td><td>${f.assigned}</td><td>${f.dep}</td><td>${f.pend}</td><td>${pill(f.pend>0?'Pending':'Active')}</td></tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="card">
+          <div class="ch"><span class="ct2">Stock overview</span></div>
+          ${prog('Deployed',w.deployed,w.received,'pf-b')}${prog('Available',w.received-w.deployed,w.received,'pf-g')}
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct2">Recent MID/TID</span><span style="font-size:11px;color:var(--bl);cursor:pointer" onclick="gp('hist')">All →</span></div>
+          ${MERCHANTS.filter(d=>d.zsm==='Rajesh Verma').slice(0,3).map(d=>`<div style="padding:5px 0;border-bottom:0.5px solid var(--br)">
+            <div style="font-size:12px;font-weight:700">${d.mname}</div>
+            <div style="display:flex;gap:5px;margin-top:2px;flex-wrap:wrap"><span class="mid-badge">MID ${d.mid}</span><span class="tid-badge">TID ${d.tid}</span><span style="font-size:10px;color:var(--mt)">${d.fso}</span></div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function rAlloc(){
+  return `<div class="g22" style="align-items:start">
+    <div class="card">
+      <div class="ch"><span class="ct2">Select FSO to allocate</span></div>
+      ${FSOS.filter(f=>f.zsmId==='Z1').map(f=>`<div style="display:flex;align-items:center;gap:9px;padding:9px;border:0.5px solid var(--br);border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .12s"
+        onmouseover="this.style.borderColor='var(--bl)';this.style.background='var(--bll)'" onmouseout="this.style.borderColor='var(--br)';this.style.background='#fff'"
+        onclick="S.openFSO='${f.id}';S.page='fso-detail';render()">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--pul);color:var(--pu);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">${f.name.split(' ').map(w=>w[0]).join('')}</div>
+        <div style="flex:1"><div style="font-size:12px;font-weight:700">${f.name}</div><div style="font-size:10px;color:var(--mt)">${f.loc}</div></div>
+        <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:var(--bl)">${f.assigned}</div><div style="font-size:9px;color:var(--mt)">assigned</div></div>
+        <span style="color:var(--bl);font-size:15px">›</span>
+      </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct2">Excel format</span></div>
+      <div style="background:var(--gnl);border:0.5px solid var(--gnb);border-radius:7px;padding:7px 11px;font-size:11px;color:#15803D;font-weight:700;margin-bottom:9px">3 columns: IMEI | Serial | Date</div>
+      <div class="xp">
+        <div class="xh" style="grid-template-columns:2fr 1fr 1fr"><span>IMEI</span><span>Serial</span><span>Date</span></div>
+        ${[['863411001234567','SB-9201','14 Apr'],['863411001234568','SB-9202','14 Apr']].map((r,i)=>`<div class="xr" style="grid-template-columns:2fr 1fr 1fr;background:${i%2?'var(--sf)':'#fff'}"><span style="font-family:monospace;font-size:10px">${r[0]}</span><span>${r[1]}</span><span>${r[2]}</span></div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── FSO PAGES ──
+function rFSODash(){
+  const myDeps=MERCHANTS.filter(d=>d.fso==='Priya Sharma');
+  return `<div>
+    <div style="background:var(--pul);border:0.5px solid var(--pub);border-radius:9px;padding:11px 13px;margin-bottom:11px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--pu);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">PS</div>
+        <div><div style="font-size:13px;font-weight:700">Priya Sharma — FSO</div><div style="font-size:11px;color:#5B21B6">ZSM: Rajesh Verma · Andheri, Mumbai</div></div>
+      </div>
+      <span class="pill p-pu">Active</span>
+    </div>
+    <div class="g3">${[['Assigned',30],['Deployed',28],['Pending',2]].map(([l,v])=>`<div class="mc"><div class="mc-l">${l}</div><div class="mc-v">${v}</div></div>`).join('')}</div>
+    <div class="card">
+      <div class="ch"><span class="ct2">My merchant deployments</span>
+        <div style="display:flex;gap:7px"><button class="btn-p" onclick="gp('deploy')">+ Deploy device</button></div>
+      </div>
+      ${merchantTable(myDeps,false)}
+    </div>
+  </div>`;
+}
+
+function rMyDevices(){
+  return `<div class="card">
+    <div class="ch"><span class="ct2">My assigned devices</span>
+      <div style="display:flex;gap:7px"><button class="btn-s">↓ Export</button><button class="btn-p" onclick="gp('deploy')">Deploy</button></div>
+    </div>
+    ${tbr('<option>All status</option><option>Pending</option><option>Deployed</option>')}
+    <div class="tw"><table class="tbl">
+      <thead><tr><th>IMEI</th><th>Serial</th><th>Merchant</th><th>MID</th><th>TID</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td style="font-family:monospace;font-size:11px">8634…9201</td><td>SB-9201</td><td>Sharma Stores</td><td><span class="mid-badge">MID-4421</span></td><td><span class="tid-badge">TID-8821</span></td><td>${pill('Deployed')}</td><td><span style="color:var(--bl);font-size:11px">View</span></td></tr>
+        <tr><td style="font-family:monospace;font-size:11px">8634…9202</td><td>SB-9202</td><td>Patel Electronics</td><td><span class="mid-badge">MID-4422</span></td><td><span class="tid-badge">TID-8822</span></td><td>${pill('Deployed')}</td><td><span style="color:var(--bl);font-size:11px">View</span></td></tr>
+        <tr><td style="font-family:monospace;font-size:11px">8634…9301</td><td>SB-9301</td><td>—</td><td>—</td><td>—</td><td>${pill('Pending')}</td><td><span style="color:var(--bl);font-size:11px;cursor:pointer" onclick="gp('deploy')">Deploy</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>`;
+}
+
+function rDeployForm(){
+  return `<div class="card" style="max-width:520px">
+    <div class="ch"><span class="ct2">Deploy soundbox to merchant</span></div>
+    <div class="sec-div">Device</div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Select IMEI</label><select class="fi"><option>863411001234301 (SB-9301)</option><option>863411001234302 (SB-9302)</option></select></div>
+      <div class="fg"><label class="fl">Serial no.</label><input class="fi" value="SB-9301" style="background:var(--sf);color:var(--mt)" readonly></div>
+    </div>
+    <div class="sec-div">Merchant details</div>
+    <div class="fg"><label class="fl">Merchant / shop name</label><input class="fi" placeholder="e.g. Gupta General Store"></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Mobile number</label><input class="fi" placeholder="98XXXXXXXX" type="tel"></div>
+      <div class="fg"><label class="fl">Email address</label><input class="fi" placeholder="merchant@email.com" type="email"></div>
+    </div>
+    <div class="fg"><label class="fl">Address / area</label><input class="fi" placeholder="Shop no., Area, City"></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">MID (Merchant ID)</label><input class="fi" placeholder="MID-XXXX"></div>
+      <div class="fg"><label class="fl">TID (Terminal ID)</label><input class="fi" placeholder="TID-XXXX"></div>
+    </div>
+    <div class="sec-div">Verification</div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Verification method</label><select class="fi"><option>— Select —</option><option>Aadhaar OTP</option><option>PAN Verification</option><option>GSTIN</option><option>Shop Registration</option></select></div>
+      <div class="fg"><label class="fl">Verification ID</label><input class="fi" placeholder="Aadhaar / PAN / Reg no."></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Deployment date</label><input class="fi" type="date"></div>
+    </div>
+    <div style="background:var(--gnl);border:0.5px solid var(--gnb);border-radius:7px;padding:8px 10px;font-size:11px;color:#15803D;font-weight:700;margin-bottom:12px">✓ MID, TID and merchant details will be recorded and visible to ZSM, Walnut Office and SBI Office.</div>
+    <div style="display:flex;gap:7px">
+      <button class="btn-p">Mark deployed & save record</button>
+      <button class="btn-s" onclick="gp('dev')">Cancel</button>
+    </div>
+  </div>`;
+}
+
+// ── SBI PAGES ──
+function rSBIDash(){
+  const ts=SHIPMENTS.reduce((a,s)=>a+s.boxes*s.perBox,0);
+  const it=SHIPMENTS.filter(s=>s.status==='In Transit').reduce((a,s)=>a+s.boxes*s.perBox,0);
+  const dl=SHIPMENTS.filter(s=>s.status==='Delivered').reduce((a,s)=>a+s.boxes*s.perBox,0);
+  const pd=SHIPMENTS.filter(s=>s.status==='Pending').reduce((a,s)=>a+s.boxes*s.perBox,0);
+  return `<div>${vo()}
+    <div class="g4">${[['Total sent',ts],['In transit',it],['Delivered',dl],['Pending',pd]].map(([l,v])=>`<div class="mc"><div class="mc-l">${l}</div><div class="mc-v">${v}</div></div>`).join('')}</div>
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><span class="ct2">Warehouse distribution</span></div>
+        <div class="bar-chart">${WAREHOUSES.map(w=>bbar(w.name.replace('WH ',''),Math.round(w.received/1200*88),'#2F6FED',w.received)).join('')}</div>
+        <div style="margin-top:12px">${WAREHOUSES.map(w=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--br);font-size:11px"><span style="font-weight:700">${w.name}</span><div style="display:flex;gap:9px"><span style="color:var(--gn);font-weight:700">${w.received} recv</span><span style="color:var(--rd);font-weight:700">${w.pending} pend</span></div></div>`).join('')}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="card">
+          <div class="ch"><span class="ct2">Monthly trend</span></div>
+          <div class="bar-chart">${[['Jan',60,'#2F6FED','600'],['Feb',75,'#2F6FED','750'],['Mar',55,'#2F6FED','550'],['Apr',90,'#16A34A','900']].map(([l,p,c,v])=>bbar(l,p,c,v)).join('')}</div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct2">Transit status</span></div>
+          ${SHIPMENTS.map(s=>`<div class="ts-row" style="background:${s.status==='In Transit'?'var(--yll)':s.status==='Delivered'?'var(--gnl)':'var(--rdl)'};border-color:${s.status==='In Transit'?'var(--ylb)':s.status==='Delivered'?'var(--gnb)':'var(--rdb)'}"><div><div style="font-size:12px;font-weight:700">${s.id}</div><div style="font-size:10px">${s.to} · ${s.boxes*s.perBox}</div></div>${pill(s.status)}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function rReports(){
+  return `<div>${vo()}
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:13px">
+      ${[['Monthly Report','Apr 2026'],['Quarterly Report','Q1 2026'],['Yearly Report','FY 2026']].map(([t,p])=>`<div class="card" style="cursor:pointer"><div style="font-size:19px;color:var(--bl);margin-bottom:7px">◎</div><div style="font-size:13px;font-weight:700;margin-bottom:3px">${t}</div><div style="font-size:10px;color:var(--mt);margin-bottom:10px">${p}</div><div style="display:flex;gap:5px"><span class="pill p-b" style="cursor:pointer">↓ Excel</span><span class="pill p-gr" style="cursor:pointer">↓ PDF</span></div></div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct2">Merchant deployment summary with MID/TID</span></div>
+      ${merchantTable(MERCHANTS,true)}
+    </div>
+  </div>`;
+}
+
+// ── MODALS ──
+function rModal(){
+  const m=S.modal;if(!m)return '';
+  const wrap=(title,body,footer)=>`<div class="mov" onclick="closeMov(event)"><div class="modal" onclick="event.stopPropagation()"><div class="mhd"><span class="mtt">${title}</span><span class="mxx" onclick="S.modal=null;render()">✕</span></div>${body}<div class="mft">${footer}</div></div></div>`;
+
+  if(m==='add-zsm') return wrap('Add ZSM',`<div class="frow"><div class="fg"><label class="fl">First name</label><input class="fi" placeholder="First"></div><div class="fg"><label class="fl">Last name</label><input class="fi" placeholder="Last"></div></div><div class="frow"><div class="fg"><label class="fl">Email</label><input class="fi" placeholder="zsm@sbi.co.in" type="email"></div><div class="fg"><label class="fl">Phone</label><input class="fi" placeholder="+91…"></div></div><div class="fg"><label class="fl">Location</label><input class="fi" placeholder="City"></div><div class="fg"><label class="fl">Assign warehouse</label><select class="fi">${WAREHOUSES.map(w=>`<option>${w.name}</option>`).join('')}</select></div><div class="frow"><div class="fg"><label class="fl">Password</label><input class="fi" type="password" placeholder="Set password"></div><div class="fg"><label class="fl">Confirm password</label><input class="fi" type="password" placeholder="Confirm"></div></div>`,
+    `<button class="btn-s" onclick="S.modal=null;render()">Cancel</button><button class="btn-p" onclick="S.modal=null;render()">Create ZSM</button>`);
+
+  if(m==='add-fso') return wrap('Add FSO',`<div class="frow"><div class="fg"><label class="fl">First name</label><input class="fi" placeholder="First"></div><div class="fg"><label class="fl">Last name</label><input class="fi" placeholder="Last"></div></div><div class="fg"><label class="fl">Phone</label><input class="fi" placeholder="+91…"></div><div class="fg"><label class="fl">Email</label><input class="fi" placeholder="fso@sbi.co.in" type="email"></div><div class="fg"><label class="fl">Location</label><input class="fi" placeholder="Area, City"></div><div class="fg"><label class="fl">Assign ZSM</label><select class="fi">${ZSMS.map(z=>`<option>${z.name}</option>`).join('')}</select></div><div class="frow"><div class="fg"><label class="fl">Password</label><input class="fi" type="password" placeholder="Set password"></div><div class="fg"><label class="fl">Confirm password</label><input class="fi" type="password" placeholder="Confirm"></div></div>`,
+    `<button class="btn-s" onclick="S.modal=null;render()">Cancel</button><button class="btn-p" onclick="S.modal=null;render()">Create FSO</button>`);
+
+  if(m==='add-wh') return wrap('Add warehouse',`<div class="fg"><label class="fl">Warehouse name</label><input class="fi" placeholder="e.g. WH Kolkata"></div><div class="frow"><div class="fg"><label class="fl">City</label><input class="fi" placeholder="City"></div><div class="fg"><label class="fl">Area</label><input class="fi" placeholder="Area"></div></div><div class="frow"><div class="fg"><label class="fl">Pincode</label><input class="fi" placeholder="400001"></div><div class="fg"><label class="fl">Assign ZSM</label><select class="fi">${ZSMS.map(z=>`<option>${z.name}</option>`).join('')}</select></div></div>`,
+    `<button class="btn-s" onclick="S.modal=null;render()">Cancel</button><button class="btn-p" onclick="S.modal=null;render()">Add warehouse</button>`);
+
+  if(['wh-upload','fso-import','send-upload'].includes(m)) return wrap(m==='fso-import'?'Import devices for FSO':m==='send-upload'?'Upload shipment Excel':'Upload inventory',
+    `<div class="uz"><div style="font-size:26px;color:var(--bl);margin-bottom:7px">↑</div><div style="font-size:13px;font-weight:700;margin-bottom:3px">Drag & drop or click</div><div style="font-size:11px;color:var(--mt)">${m==='send-upload'?'IMEI | Serial | Box ID | Shipment ID | Date':'IMEI | Serial | Date'}</div></div><div style="margin-top:9px;background:var(--bll);border:0.5px solid var(--blb);border-radius:7px;padding:7px 10px;font-size:11px;color:#1D4ED8;font-weight:700">${m==='send-upload'?'5 columns required':'3 columns required'}</div>`,
+    `<button class="btn-s" onclick="S.modal=null;render()">Cancel</button><button class="btn-p" onclick="S.modal=null;render()">Import data</button>`);
+  return '';
+}
+
+function closeMov(e){if(e.target===e.currentTarget){S.modal=null;render();}}
+function gp(p){S.page=p;S.modal=null;S.openWH=null;S.openShip=null;S.openUser=null;S.openFSO=null;render();}
+function render(){
+  const root=$('root');
+  if(S.scr==='login'){root.innerHTML=rLogin();return;}
+  root.innerHTML=`<div class="dl">${rSB()}<div class="ma">${rTB()}<div class="ct" id="pc">${rPage()}${rModal()}</div></div></div>`;
+}
+render();
+</script>
